@@ -1,0 +1,124 @@
+Libreria PHI Version 3.1 Final (incluye modulo Python y Sketch Arduino) para arduino Uno/Nano
+
+*****************************************************************
+Autor: Claudio Ravagnan - Escuela Tecnica Rojas(Buenos Aires)
+*****************************************************************
+
+Phi2(Python Hardware Interfaz) es una libreria en python y un sketch para arduino que permite manipular entradas y salidas de un
+arduino a travez del puerto serie de la pc y desde el lenguaje python. Diseñado solo a nivel educativo para permitir tener
+entradas y salidas por hardware desde lenguaje python lo que equivale a emular un raspberry en cualquier pc.
+
+
+
+Requerimientos e instalacion:
+
+1) Instalar Python3 o superior (asegurarse tener direccionado a python 3 en la variable path)
+2) Instalar el modulo pyserial, para ello primero hay que actualizar el pip:
+	python -m pip install --upgrade pip
+        pip install pyserial
+3)Conectar el phi2 y verificar 
+3) copiar la carpeta phi2 dentro de la carpeta lib de python
+4) En la primera linea del programa colocar:
+	from phi2 import *
+	phi2.set("com8", 9600)  
+
+
+Configuracion:
+
+Antes de empezar a trabajar debemos ir a el administrador de dispositivos y verificar que nuestra pc reconocio al dispositivo
+phi2 y le asigno un puerto de comunicacion (com) seguido de un numero como 3, com4, com5, etc. Dicha denominacion es importante 
+para cpoder indicarle a nuestro programa paython porque canal va trasnmitir de y desde la poc al phi2. Esto lo hacemos como
+vimos en el punto de requerimientos con el comando:
+
+phi2.set("com8", 9600) 
+
+En caso que la pc muestre dispositivo no reconocido (usb) debemos instalar el driver adjunto dentro de la carpeta phi2
+
+
+
+				
+
+*************************************
+Esquema de Entradas y Salidas
+*************************************
+
+Salidas (0-7) --> Corresponden del 2 al 9 de arduino 
+
+Salidas Extendidas (0-4) --> Corresponden del 10  al 13 de arduino
+
+Entradas (0-7) --> Corresponden del A0 al A7 de arduino (como entradas digitales arduino numeradas del 14 al 19) 
+
+Salidas PWM(1,3,4,7,8) --> Correspondientes a la 3,5,6,9,10 de arduino
+
+
+
+*************************************
+Caracteristicas Electricas
+*************************************
+
+Las salidas digitales trabajan con 5v 40 mA y se inicializan a valor LOW
+
+Las entradas estan configuadas en PULLUP esto quiere decir que siempre leerá 1 o high cuando un pulsador conectado a la entrada
+este abierto y LOW o 0 cuando este pulsado. Siempre se debe conectar el pulsador a masa
+
+
+input 2 ----------- pulador ------------gnd
+
+
+Nunca se debe tener ni en las entras ni e las salidas valores de tension negativos o superiores a 5 V
+
+
+
+
+
+*******************************
+Funciones:
+*******************************
+
+open(): Abre una conexion serie entre python y el Phi2
+
+close(): cierra la conexion serie entre python y phi2
+
+set(puerto, velocidad)  --> Define la velocidad y el numero de puerto a utilizar desde python phi
+			    
+write(dato) --> Permite escribir sobre los puertos de salida numerados del 0 al 7 y corresponden 
+                fisicamente a los puertos 2 a 9 del arduino (0-2; 1-3; ...). El dato que se debe
+		enviar es un numero decimal entre 0 y 255. Este numero es la correspondencia
+                con los valores binarios de los puertos, por ejemplo si mando el numero 4, en binario 
+		es 00000100, lo que indica que se pondra en 1(high) la salida 2 y las demas se fijaran 
+		en 0.
+
+write_e(dato) --> Write extendido, permite usar 4 salidas superiores del 0 al 3 Extendidas y corresponden 
+                fisicamente a los puertos 10 a 13 del arduino (0-10; 1-11; ... 3-13). El dato que se debe
+		enviar es un numero decimal entre 0 y 15. Este numero es la correspondencia
+                con los valores binarios de los puertos, por ejemplo si mando el numero 15, en binario 
+		es 1111, lo que indica que se pondra en 1(high) en todas las salidas superiores
+
+
+
+Down() --> setea todas las salidas a LOW, equivale a write(0)
+
+Up() --> setea todas las salidas en high, equivale a write(255)
+
+read(p) --> lee los puertos de entrada enumerados del 0-7 (arduino 14-19 o A0 al A7) y devuelve:
+		p=9 --> El estado de todos los puertos en una cadena binaria de tipo 00000000 al 11111111
+                        segun el estado de los puertos del 0-7
+		p= (0-7) El estado(0-1) del puerto solicitado
+
+
+pwm(puerto, intensidad): Realiza una modulacion de pulsos en los puertos 1,3,4,7,y 8 coprrespondients
+			a los puertos 3,5,6,9 y 10 de arduino, La intesidad es una valor de 0 a 9 que
+			será multiplicado por 25 para determinar el porcentaje de modulacion
+
+
+ 
+
+*****************************
+Veriosnes
+*****************************
+1.0 Incluye Write, set
+1.1 Opoen, close, down, up
+2.1 Write_l, Writeh, Read
+3.1 Pwm, incorpota 8 outputs, 4 outpus extendidas, 8 inputs
+
+  

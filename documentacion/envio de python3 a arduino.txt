@@ -1,0 +1,82 @@
+Introduccion:
+
+La funcion write, es decir arduino.write() envia datos de tipo BYTE, es decir que hay que convertir 
+cualquier valor a BYTE teneindo en cuenta lo siguiente:
+
+a = b'H'  --Z convierte la letra H en byte
+ 
+
+Un str(string) utiliza como defecto codificacion UTF-8, mientras que byte utiliza ASCII
+ 
+
+
+
+Originalmente los datos se almacenabanen formato ASCII, es decir con una codificacion de 7 bits, lo
+que daba unas 128 combinaciones(el bit 8 era para control de errores) -años 60-. Tenia como incombeniete
+que estaba en ingles y no mostraba ni ñ ni acentos
+
+Tiempo despues se empezo a usar el ASCII extendido que usaba los 8 bits(256 combinaciones). Los primeros
+128 caracvteres se mantuvieron iguales para mantener compatibilidad con ASCII pero para los restantes
+empezaron a aparecer distintas opciones segun el idioma(español, arabe, chino, etc). De alli que lo que
+se denomino "codificacion". Asi parecieron la cp-1252 0 cp-8050 son distintas formas de representar caracteres.
+
+Esta gran variedad de tablas con el tiempo empezo a traer problemas de comunicacion y fue asi como 
+se decidio crear una tabla estandar que unificara al que se llamo "unicode". 
+
+"Unicode es un estándar de codificación de caracteres diseñado para facilitar el tratamiento de textos
+ de múltiples lenguajes, incluido los basados en ideogramas o aquellos usados en textos de lenguas muertas.
+
+En Unicode los caracteres alfabéticos, los ideogramas y los símbolos se tratan de forma equivalente y se
+ pueden mezclar entre sí en un mismo texto, es decir, es posible representar en un mismo párrafo caracteres 
+del alfabeto árabe, cirílico, latino, ideogramas japoneses y símbolos musicales. 
+
+Para hacernos una idea del volumen de caracteres que es capaz de representar Unicode, señalar que su
+ versión 5.1 contiene más de 100.000
+
+*******************
+Python3
+*******************
+
+En python 3 las cadenas de textos son secuencias de caracteres UNICODE y almacendas en formato byte, es decir
+no existe codificacion, lo que si sucede es que una secuencia de byte puede ser comvertida a una codificacion especifica 
+y viscebersa
+
+En Python 3.x las cadenas de caracteres pueden ser de tres tipos: Unicode, Byte y Bytearray.
+
+El tipo Unicode permite caracteres de múltiples lenguajes y cada carácter en una cadena tendrá un valor
+ inmutable.
+El tipo Byte sólo permitirá caracteres ASCII y los caracteres son también inmutables.
+El tipo Bytearray es como el tipo Byte pero, en este caso, los caracteres de una cadena si son mutables. 
+
+<class 'str'> ? cadena Unicode  --> Por defecto utiliza codificacion (UTF-8) python 2 utilza ASCII
+<class 'bytes'> ? cadena Byte    --> se antepone la letra b, por ejmplo b'hola'  (Usa Ascii standart)
+
+En caso de tipo byte, no se podria mostrar la ñ, para eso se puede usar otra codificacion de las sig:
+
+pais = bytes("España", "utf-8")  --> print(pais)    b'Espa\xf1a'
+
+>>> pais = "España"     >>> pais.encode("cp1252")
+
+
+Para hacer lo inverso, es decir, convertir una cadena Byte a Unicode podemos utilizar la función decode(). 
+
+pais2.decode("cp1252")   --> 'España'  (siempre que sea la codificacion correcta)
+
+*****************************************************
+Transformaciones entre objetos str y bytes.
+******************************************************
+
+Para transformar un objeto de tipo str a bytes se utiliza la función bytes(), ingresando al objeto como primer
+argumento y posteriormente el valor al que corresponde la codificación que se aplicará.
+En el caso de querer transformar un objeto bytes a str se utiliza la función str() ingresando al objeto como
+primer argumento y posteriormente el valor al que corresponde la codificación que se aplicará.
+
+print(bytes('hola', "utf-8"))    -->  b'hola'
+
+print(str(b'hola'[1:3], 'ascii')) --> ol
+
+
+
+    
+
+ 
