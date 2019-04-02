@@ -1,39 +1,53 @@
-// Phi Version 3.1. agrega pwm y 13 outpus y 8 inputs  
+// Phi Version 4.0 ultrasonido
+#include <NewPing.h> //sensor ultrasonido
+#include <Servo.h> //servomotor
 
+ 
 //variables globales
 char caracter;
 char data;
 char parametro[8]; //utilizado para recibir los 8 bits del comando write
-char extendido[4]; //puertos extendidos
+//char extendido[4]; //puertos extendidos
 char parametro_pwm[2]; //puertos extendidos
 String lectura; //arma el string de enviuio a python
 int pin; //recibe el estado del puerto digital de lectura 
- 
+
+//Sensor ultrasonido en puertos 11 y 12
+#define TRIGGER_PIN  12  // Arduino pin tied to trigger pin on the ultrasonic sensor.
+#define ECHO_PIN     11  // Arduino pin tied to echo pin on the ultrasonic sensor.
+#define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+
+//Servo en pin 10
+Servo servoMotor; 
+
 void setup() 
 {
    Serial.begin(9600);
    //Serial.setTimeout(50);
    
    //definicion 
-   for (int i=2; i <= 13 ; i++){
+   for (int i=2; i <= 9 ; i++){
       pinMode(i, OUTPUT);
    }
 
    //seteamos todo a nivel bajo
-   for (int i=2; i <= 13; i++){
+   for (int i=2; i <= 9; i++){
       digitalWrite(i, LOW);
    }
    
    for (int i=14; i <= 19 ; i++){
       pinMode(i, INPUT_PULLUP);
    }
+    
    
-   
+  servoMotor.attach(10); // Iniciamos el servo para que empiece a trabajar con el pin 10
+  servoMotor.write(0); // Inicializamos al ángulo 0 el servomotor
 }
  
 void loop()
 {
-  
+ 
    if (Serial.available()>0) 
    {
      
@@ -92,26 +106,7 @@ void loop()
              }
        }
 
-      if (caracter == 'E') //escribir en todos s
-      {
-          //Si recubimos una E sabemos que lo que sigue es un numero entero entre 0 y 16  ya en binario de 4 posiciones
-          //por ejemplo 0000 de los puerto 10, 11, 12, 13 del arduino llamados 0,1,2,3 extendidos
-
-          int bytesleidos = Serial.readBytes(extendido,4);
-           
-           for (int i=0; i <= 3 ; i++){
-                
-                if (extendido[i] == '0' ){ 
-                   digitalWrite(13-i, LOW); 
-                }
-                else
-                {
-                   digitalWrite(13-i, HIGH);
-                  
-                }
-             }
-       }
-
+      
        
         if (caracter == 'D'){   //setea todo a down
             for (int i=13; i >= 2; i--)
@@ -137,6 +132,25 @@ void loop()
             }
             Serial.println(lectura);
         }
+
+
+      
+
+        if (caracter == 'S') //lee el ultrasonido, calcula distancia y envia dato
+      {
+          float t = sonar.ping_median(10);         
+          Serial.println(sonar.convert_cm(t));   
+                
+       }
+
+        if (caracter == 'M') //mueve el servomotor
+      {
+              //Recibe un numero de 0 a 180 grados
+              String angulo = Serial.readStringUntil('#'); //leo datos hasta el #
+              servoMotor.write(angulo.toInt());
+           
+                
+       }
         
     }
     delay(1);

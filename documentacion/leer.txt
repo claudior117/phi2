@@ -44,12 +44,11 @@ Esquema de Entradas y Salidas
 
 Salidas (0-7) --> Corresponden del 2 al 9 de arduino 
 
-Salidas Extendidas (0-4) --> Corresponden del 10  al 13 de arduino
-
 Entradas (0-7) --> Corresponden del A0 al A7 de arduino (como entradas digitales arduino numeradas del 14 al 19) 
 
 Salidas PWM(1,3,4,7,8) --> Correspondientes a la 3,5,6,9,10 de arduino
 
+Sensor ultrasonido --> Tigger 12 - Echo 11  del arduino 
 
 
 *************************************
@@ -88,12 +87,6 @@ write(dato) --> Permite escribir sobre los puertos de salida numerados del 0 al 
 		es 00000100, lo que indica que se pondra en 1(high) la salida 2 y las demas se fijaran 
 		en 0.
 
-write_e(dato) --> Write extendido, permite usar 4 salidas superiores del 0 al 3 Extendidas y corresponden 
-                fisicamente a los puertos 10 a 13 del arduino (0-10; 1-11; ... 3-13). El dato que se debe
-		enviar es un numero decimal entre 0 y 15. Este numero es la correspondencia
-                con los valores binarios de los puertos, por ejemplo si mando el numero 15, en binario 
-		es 1111, lo que indica que se pondra en 1(high) en todas las salidas superiores
-
 
 
 Down() --> setea todas las salidas a LOW, equivale a write(0)
@@ -104,14 +97,25 @@ read(p) --> lee los puertos de entrada enumerados del 0-7 (arduino 14-19 o A0 al
 		p=9 --> El estado de todos los puertos en una cadena binaria de tipo 00000000 al 11111111
                         segun el estado de los puertos del 0-7
 		p= (0-7) El estado(0-1) del puerto solicitado
+		
+		La devolucion es simpre un valor de tipo String
 
 
+------------------------------------------------------------
+version 3.1
+------------------------------------------------------------
 pwm(puerto, intensidad): Realiza una modulacion de pulsos en los puertos 1,3,4,7,y 8 coprrespondients
 			a los puertos 3,5,6,9 y 10 de arduino, La intesidad es una valor de 0 a 9 que
 			será multiplicado por 25 para determinar el porcentaje de modulacion
 
 
  
+-------------------------------------------------------------
+Version 4.0  --> ultrasonido
+-------------------------------------------------------------
+us_read()  --> recibe un dato numerico(string) en centimetros, es necesario conectar el sensor ultrasonido en los pines 12 tigger y 11 echo. Se recomienda poner un delay de al menos 0.5 entre lectura y lectura
+
+sm_write(angulo) --> envia el angulo a mover el servomotor
 
 *****************************
 Veriosnes
@@ -120,6 +124,8 @@ Veriosnes
 1.1 Opoen, close, down, up
 2.1 Write_l, Writeh, Read
 3.1 Pwm, incorpota 8 outputs, 4 outpus extendidas, 8 inputs
+4.0 Sensor Ultrasonido   --> Se sacan las salidas extendidasdel 10 al 13 porque se usaran para los sensores. 
+    Servomotor  --> pin 10
 
 
 
@@ -301,4 +307,43 @@ while LOOP_ACTIVE:
         phi2.down()
         vent1.update()
         sleep(t)
-  
+
+
+
+3)lector de distnacia con ultrasonido  
+
+##sensor ultrasonido
+from time import *
+from os import *
+
+import phi2.phi2 as phi2
+
+phi2.set("com8", 9600)
+phi2.open()
+sleep(1)
+system('cls')
+while True:
+    d = phi2.us_read()
+    print("Distancia: " + d)
+    sleep(4)
+
+
+
+4)Servo Motor
+##servo motor
+from time import *
+from os import *
+
+import phi2.phi2 as phi2
+
+phi2.set("com8", 9600)
+phi2.open()
+sleep(1)
+system('cls')
+while True:
+    phi2.sm_write(90)
+    sleep(3)
+    phi2.sm_write(0)
+    sleep(3)
+    phi2.sm_write(180)
+    sleep(3)

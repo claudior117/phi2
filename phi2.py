@@ -1,4 +1,4 @@
-##Version 3.1 FINAL agrega pwm y 13 outputs y 8 inputs
+##Version 4.0 testing ultrasonido
 # -*- coding: utf-8 -*-
 
 # Libreria Phi para usar python como raspberry
@@ -54,11 +54,11 @@ def open():
         return res
 
 
-def pwm(p,v):
+def pwm(p, v):
     #donde p es el puerto a enviar puede ser 1, 3 , 4, 7, 8 (3,5,6,9,10 del arduino)
     #v es el valor, numero de 0-9 que indica la potencia(se lo multiplica por 25)
     try:
-        lista={1, 3, 4, 7, 8}
+        lista = {1, 3, 4, 7, 8}
         if (p in lista):
             if (v >= 0 & v <= 9):
                 g_arduino.write(b'P')
@@ -66,7 +66,7 @@ def pwm(p,v):
                 g_arduino.write(envio)
                 envio = str(v).encode('utf-8')
                 g_arduino.write(envio)
-                print(p,v)
+                print(p, v)
                 res = "OK"
             else:
                 res = "ERR"
@@ -76,7 +76,6 @@ def pwm(p,v):
     except ValueError:
         res = "ERR"
         return res
-
 
 
 def read(p):
@@ -136,23 +135,6 @@ def write(dato):
         res = "ERR"
         return res
 
-def write_e(dato):
-    #write extendido usa los puertos del 10 al 13 (0-3)
-    try:
-        if (dato >= 0 & dato <= 15):
-            g_arduino.write(b'E')
-            #time.sleep(.1)
-            envio = str(format(dato, 'b').zfill(4))
-            g_arduino.write(envio.encode())
-            res = "OK"
-            print (envio)
-        else:
-            res = "ERR"
-        return res
-    except ValueError:
-        res = "ERR"
-        return res
-
 
 def write_l(puerto):
     #pone en un valor low en el puerto
@@ -169,12 +151,42 @@ def write_l(puerto):
         res = "ERR"
         return res
 
+
 def write_h(puerto):
     #pone en un valor high en el puerto
     try:
         if (puerto >= 0 & puerto <= 7):
             g_arduino.write(b'H')
             envio = str(puerto).encode('utf-8')
+            g_arduino.write(envio)
+            res = "OK"
+        else:
+            res = "ERR"
+        return res
+    except ValueError:
+        res = "ERR"
+        return res
+
+
+def us_read():
+    #lee la distancia en cm del sensor ultrasonido
+    try:
+        g_arduino.write(b'S')
+        time.sleep(.5)
+        l = g_arduino.readline().strip()
+        dato = l.decode('ascii', errors='replace')
+        return dato
+    except ValueError:
+        res = "ERR"
+        return res
+
+def sm_write(dato):
+    #el dato debe estar entre 0 y 180
+    try:
+        if (dato >= 0 & dato <= 180):
+            g_arduino.write(b'M')
+            #time.sleep(.1)
+            envio = (str(dato)+"#").encode('utf-8')
             g_arduino.write(envio)
             res = "OK"
         else:
