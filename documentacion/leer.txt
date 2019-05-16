@@ -5,7 +5,7 @@ Autor: Claudio Ravagnan - Escuela Tecnica Rojas(Buenos Aires)
 *****************************************************************
 
 Phi2(Python Hardware Interfaz) es una libreria en python y un sketch para arduino que permite manipular entradas y salidas de un
-arduino a travez del puerto serie de la pc y desde el lenguaje python. Diseñado solo a nivel educativo para permitir tener
+arduino a travez del puerto serie de la pc y desde el lenguaje python a modo de GPIO. Diseñado solo a nivel educativo para permitir tener
 entradas y salidas por hardware desde lenguaje python lo que equivale a emular un raspberry en cualquier pc.
 
 
@@ -36,7 +36,6 @@ En caso que la pc muestre dispositivo no reconocido (usb) debemos instalar el dr
 
 
 
-				
 
 *************************************
 Esquema de Entradas y Salidas
@@ -115,7 +114,11 @@ Version 4.0  --> ultrasonido
 -------------------------------------------------------------
 us_read()  --> recibe un dato numerico(string) en centimetros, es necesario conectar el sensor ultrasonido en los pines 12 tigger y 11 echo. Se recomienda poner un delay de al menos 0.5 entre lectura y lectura
 
-sm_write(angulo) --> envia el angulo a mover el servomotor
+-------------------------------------------------------------
+Version 4.1  --> servomotor
+-------------------------------------------------------------
+sm_write(angulo) --> envia el angulo a mover el servomotor --> Pin 10 servomotor
+
 
 *****************************
 Veriosnes
@@ -124,8 +127,8 @@ Veriosnes
 1.1 Opoen, close, down, up
 2.1 Write_l, Writeh, Read
 3.1 Pwm, incorpota 8 outputs, 4 outpus extendidas, 8 inputs
-4.0 Sensor Ultrasonido   --> Se sacan las salidas extendidasdel 10 al 13 porque se usaran para los sensores. 
-    Servomotor  --> pin 10
+4.0 Sensor Ultrasonido   --> Se sacan las salidas extendidas del 10 al 13 porque se usaran para los sensores. 
+4.1 Servomotor  --> pin 10
 
 
 
