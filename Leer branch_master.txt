@@ -1,0 +1,4 @@
+El master es el la version definitiva.
+
+Existen actualmente 2 branchs en curso: Branch empaquetado - Branch sensordht
+
