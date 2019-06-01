@@ -1,8 +1,9 @@
-##Version 4.0 testing ultrasonido
+# Version 4.0 testing ultrasonido
 # -*- coding: utf-8 -*-
 
 # Libreria Phi para usar python como raspberry
-import time, serial
+import time
+import serial
 
 gpuerto = "com7"
 gvelocidad = 9600
@@ -20,7 +21,7 @@ def close():
 
 
 def down():
-    #pone todos los puertos de salida en low
+    # pone todos los puertos de salida en low
     try:
         g_arduino.write(b'D')
         time.sleep(0.1)
@@ -33,7 +34,7 @@ def down():
 
 def open():
     try:
-        #se abre la comunicacion entre arduino y python
+        # se abre la comunicacion entre arduino y python
         global g_arduino
         g_arduino = serial.Serial(gpuerto, gvelocidad)
         # Reset manual del Arduino
@@ -55,8 +56,10 @@ def open():
 
 
 def pwm(p, v):
-    #donde p es el puerto a enviar puede ser 1, 3 , 4, 7, 8 (3,5,6,9,10 del arduino)
-    #v es el valor, numero de 0-9 que indica la potencia(se lo multiplica por 25)
+    # donde p es el puerto a enviar puede ser
+    # 1, 3 , 4, 7, 8 (3,5,6,9,10 del arduino)
+    # v es el valor, numero de 0-9 que indica la
+    # potencia(se lo multiplica por 25)
     try:
         lista = {1, 3, 4, 7, 8}
         if (p in lista):
@@ -79,7 +82,7 @@ def pwm(p, v):
 
 
 def read(p):
-    #p puede ser 0,1,2,3 (para indicar puertos individuales) O 9 para todos
+    # p puede ser 0,1,2,3 (para indicar puertos individuales) O 9 para todos
     try:
         g_arduino.write(b'R')
         time.sleep(.1)
@@ -100,7 +103,7 @@ def read(p):
 
 
 def set(p, v):
-    #define el puerto y la velocidad de conexion
+    # define el puerto y la velocidad de conexion
     global gpuerto
     gpuerto = p
     global gvelocidad
@@ -108,7 +111,7 @@ def set(p, v):
 
 
 def up():
-    #pone todos los puertos de salida en high
+    # pone todos los puertos de salida en high
     try:
         g_arduino.write(b'U')
         time.sleep(0.1)
@@ -120,11 +123,11 @@ def up():
 
 
 def write(dato):
-    #el dato debe estar entre 0 y 255
+    # el dato debe estar entre 0 y 255
     try:
         if (dato >= 0 & dato <= 255):
             g_arduino.write(b'W')
-            #time.sleep(.1)
+            # time.sleep(.1)
             envio = str(format(dato, 'b').zfill(8))
             g_arduino.write(envio.encode())
             res = "OK"
@@ -137,7 +140,7 @@ def write(dato):
 
 
 def write_l(puerto):
-    #pone en un valor low en el puerto
+    # pone en un valor low en el puerto
     try:
         if (puerto >= 0 & puerto <= 7):
             g_arduino.write(b'L')
@@ -153,7 +156,7 @@ def write_l(puerto):
 
 
 def write_h(puerto):
-    #pone en un valor high en el puerto
+    # pone en un valor high en el puerto
     try:
         if (puerto >= 0 & puerto <= 7):
             g_arduino.write(b'H')
@@ -169,7 +172,7 @@ def write_h(puerto):
 
 
 def us_read():
-    #lee la distancia en cm del sensor ultrasonido
+    # lee la distancia en cm del sensor ultrasonido
     try:
         g_arduino.write(b'S')
         time.sleep(.5)

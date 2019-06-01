@@ -16,6 +16,10 @@ Requerimientos e instalacion:
 2) Instalar el modulo pyserial, para ello primero hay que actualizar el pip:
 	python -m pip install --upgrade pip
         pip install pyserial
+
+   	Si no tenemos internet  python -m pip install  ruta\pyserial-3.4-py2.py3-none-any.whl
+	(El archivo se encuentra en la carpeta instaladores)
+
 3)Conectar el phi2 y verificar 
 3) copiar la carpeta phi2 dentro de la carpeta lib de python
 4) En la primera linea del programa colocar:
@@ -35,6 +39,24 @@ phi2.set("com8", 9600)
 En caso que la pc muestre dispositivo no reconocido (usb) debemos instalar el driver adjunto dentro de la carpeta phi2
 
 
+Bluetooht:
+
+Se debe utilizar con una placa HC05 
+
+Conectar fisicamente +5 gnd y rx(pin1 phi2)   ----   tx(RC05)
+                              tx(pin0 phi2)   ----   rx(RH05)
+
+
+La pc es maestro y el HC05 esclavo(por defecto)
+
+Activar bluethoo en la pc y poner agregar dispositivo, tiene que aparecer HC 05, conectamos, password defecto 1234
+
+En administrador de dispositivo aparecen los puertos com relacionados, aparecen 2 uno entrante y otro saliente, usamos el saliente,
+si no dice probamos con uno y con otro(generalmente es el numero menor)
+En el programa seteamos el puerto COM del Bluetooht con la instruccion phi2.set(puerto, 9600) y listo transmite y recibe como un puerto usb pero bluetooth
+ 
+
+
 
 
 *************************************
@@ -47,7 +69,11 @@ Entradas (0-7) --> Corresponden del A0 al A7 de arduino (como entradas digitales
 
 Salidas PWM(1,3,4,7,8) --> Correspondientes a la 3,5,6,9,10 de arduino
 
+E/S uso generales (10-13)
+
 Sensor ultrasonido --> Tigger 12 - Echo 11  del arduino 
+
+Motor Servo  -->  Pin 10
 
 
 *************************************
