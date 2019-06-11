@@ -1,7 +1,7 @@
-Libreria PHI Version 3.1 Final (incluye modulo Python y Sketch Arduino) para arduino Uno/Nano
+Libreria PHI Version 4.1 Final (incluye modulo Python y Sketch Arduino) para arduino Uno/Nano
 
 *****************************************************************
-Autor: Claudio Ravagnan - Escuela Tecnica Rojas(Buenos Aires)
+Autor: Claudio Ravagnan - Escuela Tecnica Rojas(Buenos Aires-Argentina)
 *****************************************************************
 
 Phi2(Python Hardware Interfaz) es una libreria en python y un sketch para arduino que permite manipular entradas y salidas de un
@@ -11,8 +11,6 @@ entradas y salidas por hardware desde lenguaje python lo que equivale a emular u
 
 
 Requerimientos e instalacion:
-
-Manual:
 
 1) Instalar Python3 o superior (asegurarse tener direccionado a python 3 en la variable path)
 2) Instalar el modulo pyserial, para ello primero hay que actualizar el pip:
@@ -28,24 +26,6 @@ Manual:
 	from phi2 import *
 	phi2.set("com8", 9600)  
 
-	*********************************************************
-	Para desisntalar solo hace falta borrar la carpeta phi2
-	*********************************************************
-
-
-Automatica:
-
-Localmente(sin Internet):    pip install phi2-3.1.0.tar.gz     --> este archivo se encuentra dentro de la carpeta dist
-
-	*********************************************************
-	Para desisntalar pip uninstall phi2-3.1.0.tar.gz
-	*********************************************************
-
-Internet: 
-   
-	pip install phi2
-
-
 
 Configuracion:
 
@@ -57,24 +37,6 @@ vimos en el punto de requerimientos con el comando:
 phi2.set("com8", 9600) 
 
 En caso que la pc muestre dispositivo no reconocido (usb) debemos instalar el driver adjunto dentro de la carpeta phi2
-
-
-Bluetooht:
-
-Se debe utilizar con una placa HC05 
-
-Conectar fisicamente +5 gnd y rx(pin1 phi2)   ----   tx(RC05)
-                              tx(pin0 phi2)   ----   rx(RH05)
-
-
-La pc es maestro y el HC05 esclavo(por defecto)
-
-Activar bluethoo en la pc y poner agregar dispositivo, tiene que aparecer HC 05, conectamos, password defecto 1234
-
-En administrador de dispositivo aparecen los puertos com relacionados, aparecen 2 uno entrante y otro saliente, usamos el saliente,
-si no dice probamos con uno y con otro(generalmente es el numero menor)
-En el programa seteamos el puerto COM del Bluetooht con la instruccion phi2.set(puerto, 9600) y listo transmite y recibe como un puerto usb pero bluetooth
- 
 
 
 
