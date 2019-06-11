@@ -12,6 +12,8 @@ entradas y salidas por hardware desde lenguaje python lo que equivale a emular u
 
 Requerimientos e instalacion:
 
+Manual:
+
 1) Instalar Python3 o superior (asegurarse tener direccionado a python 3 en la variable path)
 2) Instalar el modulo pyserial, para ello primero hay que actualizar el pip:
 	python -m pip install --upgrade pip
@@ -25,6 +27,24 @@ Requerimientos e instalacion:
 4) En la primera linea del programa colocar:
 	from phi2 import *
 	phi2.set("com8", 9600)  
+
+	*********************************************************
+	Para desisntalar solo hace falta borrar la carpeta phi2
+	*********************************************************
+
+
+Automatica:
+
+Localmente(sin Internet):    pip install phi2-3.1.0.tar.gz     --> este archivo se encuentra dentro de la carpeta dist
+
+	*********************************************************
+	Para desisntalar pip uninstall phi2-3.1.0.tar.gz
+	*********************************************************
+
+Internet: 
+   
+	pip install phi2
+
 
 
 Configuracion:

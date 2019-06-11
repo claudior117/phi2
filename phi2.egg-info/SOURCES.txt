@@ -1,0 +1,8 @@
+setup.py
+phi2/__init__.py
+phi2/phi2.py
+phi2.egg-info/PKG-INFO
+phi2.egg-info/SOURCES.txt
+phi2.egg-info/dependency_links.txt
+phi2.egg-info/requires.txt
+phi2.egg-info/top_level.txt
