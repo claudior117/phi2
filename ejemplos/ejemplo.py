@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
-import phi2 as phi2 #Importa libreria phi2(la carpeta phi2 debe
+import phi2.phi2 as phi2 #Importa libreria phi2(la carpeta phi2 debe
                                #estar dentro de la carpeta del proyecto
 phi2.set("com9", 9600)  #define el puerto de comunicacion
 phi2.open()  #abre la conexion con phi2

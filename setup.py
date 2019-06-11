@@ -3,14 +3,14 @@ from setuptools import setup, find_packages
 
 setup(
         name='phi2',
-        version='3.1.4',
+        version='3.1.5',
         description='Python Hardware Interfaz GPIO para python',
         long_description='Proyecto educativo que provee una GPIO basada en arduino para python',
         url='https://github.com/claudior117/phi2.git',
         author='cludio ravagnan',
         author_email='claudio@proyecto204.com.ar',
-
-        license='MIT',
+        include_package_data=True, #permite archivos sin extension py
+        license='GPL',
 
         # See https://PyPI.python.org/PyPI?%3Aaction=list_classifiers
         classifiers=[
@@ -38,6 +38,8 @@ setup(
             'Programming Language :: Python :: 3.4',
 
             'Intended Audience :: Education',
+
+            'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
 
         ],
 

@@ -1,0 +1,8 @@
+Cambiar al version dentro del setup.py
+
+generar el paquete de instalacion con --> python setup.py sdist
+
+subirlo a pypi.org con ----------------> twine upload dist/*
+
+Pide usuario :claudior117
+     password:c13131313R* 

@@ -1,5 +1,0 @@
-Hacer grafico pytohn desde arduino --> https://www.pybonacci.org/2014/01/19/leer-datos-de-arduino-desde-python/
-
-
-Controlar robot bluethoot con python --> https://robologs.net/2015/06/20/construir-un-robot-bluetooth-con-arduino-y-python/
-

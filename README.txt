@@ -1,93 +1,92 @@
-Libreria PHI Version 3.1 Final (incluye modulo Python y Sketch Arduino) para arduino Uno/Nano
+Libreria PHI Version 3.1.4 Final (incluye modulo Python y Sketch Arduino) para arduino Uno/Nano
 
 *****************************************************************
-Autor: Claudio Ravagnan - Escuela Tecnica Rojas(Buenos Aires)
+Autor: Claudio Ravagnan - Escuela Tecnica Rojas(Buenos Aires) claudio@proyecto204.com.ar
+Licencia: GNU GPL v3+
 *****************************************************************
+
+===================
+CARACTERISTICAS
+===================
 
 Phi2(Python Hardware Interfaz) es una libreria en python y un sketch para arduino que permite manipular entradas y salidas de un
 arduino a travez del puerto serie de la pc y desde el lenguaje python a modo de GPIO. Diseñado solo a nivel educativo para permitir tener
 entradas y salidas por hardware desde lenguaje python lo que equivale a emular un raspberry en cualquier pc.
 
+Para su utilizacion es necesario grabar el sketch arduino que se incluye en un modulo arduino Nano o Uno e instalar python3 y el paquete phi2   
 
 
-Requerimientos e instalacion:
+==================
+INSTALACION:
+=================
 
-Manual:
+Localmente(sin Internet):    pip install phi2-3.1.5.tar.gz     --> La version puede variar
 
-1) Instalar Python3 o superior (asegurarse tener direccionado a python 3 en la variable path)
-2) Instalar el modulo pyserial, para ello primero hay que actualizar el pip:
-	python -m pip install --upgrade pip
-        pip install pyserial
+Internet: pip install phi2
 
-   	Si no tenemos internet  python -m pip install  ruta\pyserial-3.4-py2.py3-none-any.whl
-	(El archivo se encuentra en la carpeta instaladores)
-
-3)Conectar el phi2 y verificar 
-3) copiar la carpeta phi2 dentro de la carpeta lib de python
-4) En la primera linea del programa colocar:
-	from phi2 import *
-	phi2.set("com8", 9600)  
 
 	*********************************************************
-	Para desisntalar solo hace falta borrar la carpeta phi2
+	Para desisntalar pip uninstall phi2
 	*********************************************************
 
+=========================
+CONEXION
+=========================
+Entre phi2 y la pc se establece una conexion serie, una vez conectado a traves del puerto usb la pc debe asignar automaticamente un puerto COM.
+Verificar en la seccion de sistemas dentro del panel de control para verificar el numero de puerto asignado COM2, COM6, etc. El otro parametro 
+es la velcoidad de transmision de informacion, por defecto utilizar 9600 baudios. Un a vez verificados estos parametros estamos en condicionwes
+de empezar a realizar los primeros programas.   
 
-Automatica:
+Nuestro codigo siempre deberá establecwer la comunicacion serie como primer medida de la siguiente manera:
 
-Localmente(sin Internet):    pip install phi2-3.1.0.tar.gz     --> este archivo se encuentra dentro de la carpeta dist
 
-	*********************************************************
-	Para desisntalar pip uninstall phi2-3.1.0.tar.gz
-	*********************************************************
+import phi2.phi2 as phi2    --> Imprta paquete phi2
+phi2.set("com8", 9600)      --> Establece los parametros de conexion segun lo visto anteriormente
+phi2.open()                 --> Abre la conexion 
 
-Internet: 
+
+Nota: Para arduino nano es necesario en muchas ocaciones instalar los drivers correspondientes para que el SO lo reconozca
+
+Bluetooht: Tambien podemos utilizar con una placa serie bluetooth HC05
+
+
+
+============================
+PINOUT
+============================
+
+pin0	tx()	----   rx(RH05)  Usar solo para conexion Bluetooth
+pin1	rx()	----   tx(RC05)  Usar solo para conexion Bluetooth
+
+pin2	rst()	----	Sin uso
+pin3	gnd	----	gnd
+
+pin4	d2	----	s0	Salida digital 0
+pin5	d3	----	s1	Salida digital 1   **pwm
+pin6	d4	----	s2	Salida digital 2
+pin7	d5	----	s3	Salida digital 3   **pwm	
+pin8	d6	----	s4	Salida digital 4   **pwm
+pin9	d7	----	s5	Salida digital 5
+pin10	d8	----	s6	Salida digital 6
+pin11	d9	----	s7	Salida digital 7   **pwm
+
+	Las salidas digitales de d2-d11 trabajan en paralelo, es decir, que encienden o apagan todas simultanemente.
+	Desde el programa mandamos phi2.write(n) donde n es un numero decial entre 0 y 255. Cada salida es un bit binario
+	que puede tener un cero(apagado) o un 1(encendido) dando otrigen a un numero de 1 byte entre 00000000-11111111.
+
+
+
    
-	pip install phi2
-
-
-
-Configuracion:
-
-Antes de empezar a trabajar debemos ir a el administrador de dispositivos y verificar que nuestra pc reconocio al dispositivo
-phi2 y le asigno un puerto de comunicacion (com) seguido de un numero como 3, com4, com5, etc. Dicha denominacion es importante 
-para cpoder indicarle a nuestro programa paython porque canal va trasnmitir de y desde la poc al phi2. Esto lo hacemos como
-vimos en el punto de requerimientos con el comando:
-
-phi2.set("com8", 9600) 
-
-En caso que la pc muestre dispositivo no reconocido (usb) debemos instalar el driver adjunto dentro de la carpeta phi2
-
-
-Bluetooht:
-
-Se debe utilizar con una placa HC05 
-
-Conectar fisicamente +5 gnd y rx(pin1 phi2)   ----   tx(RC05)
-                              tx(pin0 phi2)   ----   rx(RH05)
-
-
-La pc es maestro y el HC05 esclavo(por defecto)
-
-Activar bluethoo en la pc y poner agregar dispositivo, tiene que aparecer HC 05, conectamos, password defecto 1234
-
-En administrador de dispositivo aparecen los puertos com relacionados, aparecen 2 uno entrante y otro saliente, usamos el saliente,
-si no dice probamos con uno y con otro(generalmente es el numero menor)
-En el programa seteamos el puerto COM del Bluetooht con la instruccion phi2.set(puerto, 9600) y listo transmite y recibe como un puerto usb pero bluetooth
- 
-
-
-
 
 *************************************
 Esquema de Entradas y Salidas
 *************************************
 
-Salidas (0-7) --> Corresponden del 2 al 9 de arduino 
+
 
 Entradas (0-7) --> Corresponden del A0 al A7 de arduino (como entradas digitales arduino numeradas del 14 al 19) 
 
-Salidas PWM(1,3,4,7,8) --> Correspondientes a la 3,5,6,9,10 de arduino
+
 
 E/S uso generales (10-13)
 

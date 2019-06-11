@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import time, phi2
+import time
+import phi2.phi2 as phi2
 phi2.set("com8", 9600)
 phi2.open()
 time.sleep(1)

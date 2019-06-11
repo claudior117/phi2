@@ -1,2 +1,0 @@
-La carpeta phi esta colocada aqui a fin que funciones los ejemplos, puede no 
-coincidir con el ultimo codigo oficial
